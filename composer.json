@@ -1,0 +1,14 @@
+{
+  "name": "karol-dabrowski/doctrine-dynamic-connection",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Karol Dabrowski",
+      "email": "contact@karoldabrowski.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.5"
+  }
+}
