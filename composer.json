@@ -12,6 +12,7 @@
   "require": {
     "php": ">=7.3",
     "doctrine/common": "^3.0",
-    "doctrine/dbal": "^2.10.0"
+    "doctrine/dbal": "^2.10.0",
+    "doctrine/orm": "^2.8"
   }
 }
