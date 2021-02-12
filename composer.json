@@ -9,6 +9,11 @@
       "email": "contact@karoldabrowski.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "DynamicConnection\\": "src"
+    }
+  },
   "require": {
     "php": ">=7.3",
     "doctrine/common": "^3.0",
