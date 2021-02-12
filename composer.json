@@ -14,10 +14,18 @@
       "DynamicConnection\\": "src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  },
   "require": {
     "php": ">=7.3",
     "doctrine/common": "^3.0",
     "doctrine/dbal": "^2.10.0",
     "doctrine/orm": "^2.8"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9"
   }
 }
