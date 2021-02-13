@@ -8,14 +8,17 @@ use DynamicConnection\Exception\ConnectionTypeException;
 
 final class DynamicEntityManager extends EntityManagerDecorator
 {
-	public function changeDatabase(string $databaseName): void
+	public function changeDatabase(string $databaseName, bool $clear = true): void
 	{
 		$connection = $this->getConnection();
 		if(!$connection instanceof DynamicConnection) {
 			throw new ConnectionTypeException();
 		}
 
-		$this->clear();
+		if($clear) {
+			$this->clear();
+		}
+
 		$connection->changeDatabase($databaseName);
 	}
 }
