@@ -15,10 +15,19 @@ final class DynamicEntityManager extends EntityManagerDecorator
 			throw new ConnectionTypeException();
 		}
 
+		if($this->isTransactionActive()) {
+			$this->rollback();
+		}
+
 		if($clear) {
 			$this->clear();
 		}
 
 		$connection->changeDatabase($databaseName);
+	}
+
+	private function isTransactionActive(): bool
+	{
+		return $this->getConnection()->isTransactionActive();
 	}
 }
