@@ -8,7 +8,7 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver;
 
-final class DynamicConnectionWrapper extends Connection implements DynamicConnection
+class DynamicConnectionWrapper extends Connection implements DynamicConnection
 {
 	public function __construct(
 		array $params,
