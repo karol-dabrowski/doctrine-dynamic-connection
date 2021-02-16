@@ -23,7 +23,10 @@ final class DynamicEntityManager extends EntityManagerDecorator
 			$this->clear();
 		}
 
-		$connection->changeDatabase($databaseName);
+		$params = [];
+		$params['dbName'] = $databaseName;
+
+		$connection->reinitialize($params);
 	}
 
 	private function isTransactionActive(): bool

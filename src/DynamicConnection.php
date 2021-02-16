@@ -7,5 +7,5 @@ use Doctrine\DBAL\Driver\Connection;
 
 interface DynamicConnection extends Connection
 {
-	public function changeDatabase(string $databaseName): void;
+	public function reinitialize(array $params): void;
 }

@@ -19,14 +19,13 @@ class DynamicConnectionWrapper extends Connection implements DynamicConnection
 		parent::__construct($params, $driver, $config, $eventManager);
 	}
 
-	public function changeDatabase(string $databaseName): void
+	public function reinitialize(array $params): void
 	{
 		if ($this->isConnected()) {
 			$this->close();
 		}
 
-		$params = $this->getParams();
-		$params['dbname'] = $databaseName;
+		$params = array_merge($this->getParams(), $params);
 		parent::__construct($params, $this->_driver, $this->_config, $this->_eventManager);
 	}
 }
