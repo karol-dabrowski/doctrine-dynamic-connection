@@ -14,6 +14,7 @@ class DynamicConnectionWrapperTest extends TestCase
 	private DynamicConnection $dynamicConnection;
 
 	protected array $params = [
+		'dbname' => 'test_db',
 		'driver' => 'pdo_mysql',
 		'host' => 'localhost',
 		'user' => 'user',
@@ -27,18 +28,19 @@ class DynamicConnectionWrapperTest extends TestCase
 		$this->dynamicConnection = DriverManager::getConnection($this->params);
 	}
 
-	public function testConnectionIsConnectionWrapperInstance()
+	public function testCanBeCreated()
 	{
-		self::assertInstanceOf(DynamicConnectionWrapper::class, $this->dynamicConnection);
+		$this->assertInstanceOf(DynamicConnectionWrapper::class, $this->dynamicConnection);
 	}
 
-	public function testConnectionIsSubclassOfDbalConnection()
+	public function testIsSubclassOfDbalConnection()
 	{
-		self::assertInstanceOf(Connection::class, $this->dynamicConnection);
+		$this->assertInstanceOf(Connection::class, $this->dynamicConnection);
 	}
 
-	public function testConnectionImplementsDynamicConnectionInterface()
+	public function testImplementsDynamicConnectionInterface()
 	{
-		self::assertInstanceOf(DynamicConnection::class, $this->dynamicConnection);
+		$this->assertInstanceOf(DynamicConnection::class, $this->dynamicConnection);
+		$this->dynamicConnection->reinitialize($this->params);
 	}
 }
