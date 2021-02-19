@@ -22,7 +22,8 @@ return PhpCsFixer\Config::create()
         'ordered_class_elements' => false,
         'php_unit_method_casing' => false,
         'php_unit_test_class_requires_covers' => false,
-        'concat_space' => ['spacing' => 'one']
+        'concat_space' => ['spacing' => 'one'],
+        'trailing_comma_in_multiline_array' => false
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude(['vendor'])
