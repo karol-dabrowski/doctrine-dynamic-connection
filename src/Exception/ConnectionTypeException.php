@@ -9,10 +9,11 @@ use Exception;
 
 class ConnectionTypeException extends Exception
 {
-	public function __construct()
-	{
-		parent::__construct(sprintf(
-			'Wrong connection type. Instance of %s expected.', DynamicConnection::class
-		));
-	}
+    public function __construct()
+    {
+        parent::__construct(sprintf(
+            'Wrong connection type. Instance of %s expected.',
+            DynamicConnection::class
+        ));
+    }
 }

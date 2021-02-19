@@ -11,22 +11,22 @@ use Doctrine\DBAL\Driver;
 
 class DynamicConnectionWrapper extends Connection implements DynamicConnection
 {
-	public function __construct(
-		array $params,
-		Driver $driver,
-		?Configuration $config = null,
-		?EventManager $eventManager = null
-	) {
-		parent::__construct($params, $driver, $config, $eventManager);
-	}
+    public function __construct(
+        array $params,
+        Driver $driver,
+        ?Configuration $config = null,
+        ?EventManager $eventManager = null
+    ) {
+        parent::__construct($params, $driver, $config, $eventManager);
+    }
 
-	public function reinitialize(array $params): void
-	{
-		if ($this->isConnected()) {
-			$this->close();
-		}
+    public function reinitialize(array $params): void
+    {
+        if ($this->isConnected()) {
+            $this->close();
+        }
 
-		$params = array_merge($this->getParams(), $params);
-		parent::__construct($params, $this->_driver, $this->_config, $this->_eventManager);
-	}
+        $params = array_merge($this->getParams(), $params);
+        parent::__construct($params, $this->_driver, $this->_config, $this->_eventManager);
+    }
 }

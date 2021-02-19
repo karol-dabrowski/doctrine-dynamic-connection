@@ -10,11 +10,11 @@ use PHPUnit\Framework\TestCase;
 
 class DynamicEntityManagerTest extends TestCase
 {
-	public function testCanBeCreated()
-	{
-		$entityManagerMock = $this->createMock(EntityManager::class);
-		$dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+    public function testCanBeCreated()
+    {
+        $entityManagerMock = $this->createMock(EntityManager::class);
+        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
 
-		$this->assertInstanceOf(DynamicEntityManager::class, $dynamicEntityManager);
-	}
+        $this->assertInstanceOf(DynamicEntityManager::class, $dynamicEntityManager);
+    }
 }

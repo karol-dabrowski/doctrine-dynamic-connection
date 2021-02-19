@@ -12,36 +12,36 @@ use PHPUnit\Framework\TestCase;
 
 class DynamicConnectionWrapperTest extends TestCase
 {
-	private DynamicConnection $dynamicConnection;
+    private DynamicConnection $dynamicConnection;
 
-	protected array $params = [
-		'dbname' => 'test_db',
-		'driver' => 'pdo_mysql',
-		'host' => 'localhost',
-		'user' => 'user',
-		'password' => 'password',
-		'port' => '3306',
-		'wrapperClass' => DynamicConnectionWrapper::class
-	];
+    protected array $params = [
+        'dbname' => 'test_db',
+        'driver' => 'pdo_mysql',
+        'host' => 'localhost',
+        'user' => 'user',
+        'password' => 'password',
+        'port' => '3306',
+        'wrapperClass' => DynamicConnectionWrapper::class
+    ];
 
-	protected function setUp(): void
-	{
-		$this->dynamicConnection = DriverManager::getConnection($this->params);
-	}
+    protected function setUp(): void
+    {
+        $this->dynamicConnection = DriverManager::getConnection($this->params);
+    }
 
-	public function testCanBeCreated()
-	{
-		$this->assertInstanceOf(DynamicConnectionWrapper::class, $this->dynamicConnection);
-	}
+    public function testCanBeCreated()
+    {
+        $this->assertInstanceOf(DynamicConnectionWrapper::class, $this->dynamicConnection);
+    }
 
-	public function testIsSubclassOfDbalConnection()
-	{
-		$this->assertInstanceOf(Connection::class, $this->dynamicConnection);
-	}
+    public function testIsSubclassOfDbalConnection()
+    {
+        $this->assertInstanceOf(Connection::class, $this->dynamicConnection);
+    }
 
-	public function testImplementsDynamicConnectionInterface()
-	{
-		$this->assertInstanceOf(DynamicConnection::class, $this->dynamicConnection);
-		$this->dynamicConnection->reinitialize($this->params);
-	}
+    public function testImplementsDynamicConnectionInterface()
+    {
+        $this->assertInstanceOf(DynamicConnection::class, $this->dynamicConnection);
+        $this->dynamicConnection->reinitialize($this->params);
+    }
 }

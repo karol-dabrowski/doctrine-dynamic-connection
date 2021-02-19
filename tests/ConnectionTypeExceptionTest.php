@@ -9,24 +9,24 @@ use PHPUnit\Framework\TestCase;
 
 class ConnectionTypeExceptionTest extends TestCase
 {
-	private ConnectionTypeException $exception;
+    private ConnectionTypeException $exception;
 
-	protected function setUp(): void
-	{
-		$this->exception = new ConnectionTypeException();
-	}
+    protected function setUp(): void
+    {
+        $this->exception = new ConnectionTypeException();
+    }
 
-	public function testCanBeCreated()
-	{
-		$this->assertInstanceOf(ConnectionTypeException::class, $this->exception);
-	}
+    public function testCanBeCreated()
+    {
+        $this->assertInstanceOf(ConnectionTypeException::class, $this->exception);
+    }
 
-	public function testReturnsCorrectMessage()
-	{
-		$this->assertIsString($this->exception->getMessage());
-		$this->assertEquals(
-			'Wrong connection type. Instance of DynamicConnection\DynamicConnection expected.',
-			$this->exception->getMessage()
-		);
-	}
+    public function testReturnsCorrectMessage()
+    {
+        $this->assertIsString($this->exception->getMessage());
+        $this->assertEquals(
+            'Wrong connection type. Instance of DynamicConnection\DynamicConnection expected.',
+            $this->exception->getMessage()
+        );
+    }
 }
