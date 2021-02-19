@@ -9,7 +9,7 @@ use DynamicConnection\Exception\ConnectionTypeException;
 
 final class DynamicEntityManager extends EntityManagerDecorator
 {
-    public function changeDatabase(string $databaseName, bool $clear = true): void
+    public function changeDatabase(string $databaseName): void
     {
         $connection = $this->getConnection();
         if (!$connection instanceof DynamicConnection) {
@@ -20,9 +20,7 @@ final class DynamicEntityManager extends EntityManagerDecorator
             $this->rollback();
         }
 
-        if ($clear) {
-            $this->clear();
-        }
+        $this->clear();
 
         $params = [];
         $params['dbName'] = $databaseName;
