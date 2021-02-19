@@ -25,7 +25,7 @@ class ConnectionTypeExceptionTest extends TestCase
 	{
 		$this->assertIsString($this->exception->getMessage());
 		$this->assertEquals(
-			"Wrong connection type. Instance of DynamicConnection\DynamicConnection expected.",
+			'Wrong connection type. Instance of DynamicConnection\DynamicConnection expected.',
 			$this->exception->getMessage()
 		);
 	}
