@@ -11,10 +11,10 @@ final class DynamicEntityManager extends EntityManagerDecorator
 {
     public function changeDatabase(
         string $databaseName,
-        string $username = null,
-        string $password = null,
-        string $host = null,
-        int $port = null
+        ?string $username = null,
+        ?string $password = null,
+        ?string $host = null,
+        ?int $port = null
     ): void {
         $connection = $this->getConnection();
         if (!$connection instanceof DynamicConnection) {
