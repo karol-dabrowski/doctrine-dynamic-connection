@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\DriverManager;
 use DynamicConnection\DynamicConnectionWrapper;
 use DynamicConnection\DynamicConnection;
@@ -42,5 +43,29 @@ class DynamicConnectionWrapperTest extends TestCase
     public function testImplementsDynamicConnectionInterface()
     {
         $this->assertInstanceOf(DynamicConnection::class, $this->dynamicConnection);
+    }
+
+    public function testClosesConnectionIfIsConnected()
+    {
+        $dynamicConnection = $this->getMockBuilder(DynamicConnectionWrapper::class)
+            ->setConstructorArgs([$this->params, $this->createMock(Driver::class)])
+            ->onlyMethods(['isConnected', 'close'])
+            ->getMock();
+        $dynamicConnection->method('isConnected')->willReturn(true);
+
+        $dynamicConnection->expects($this->once())->method('close')->with();
+        $dynamicConnection->reinitialize($this->params);
+    }
+
+    public function testDoesNotCloseConnectionIfIsNotConnected()
+    {
+        $dynamicConnection = $this->getMockBuilder(DynamicConnectionWrapper::class)
+            ->setConstructorArgs([$this->params, $this->createMock(Driver::class)])
+            ->onlyMethods(['isConnected', 'close'])
+            ->getMock();
+        $dynamicConnection->method('isConnected')->willReturn(false);
+
+        $dynamicConnection->expects($this->never())->method('close')->with();
+        $dynamicConnection->reinitialize($this->params);
     }
 }
