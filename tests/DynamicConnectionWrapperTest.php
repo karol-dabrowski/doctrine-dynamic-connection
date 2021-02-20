@@ -68,4 +68,15 @@ class DynamicConnectionWrapperTest extends TestCase
         $dynamicConnection->expects($this->never())->method('close')->with();
         $dynamicConnection->reinitialize($this->params);
     }
+
+    public function testDatabaseCanBeChanged()
+    {
+        $newDbName = 'new_db_name';
+        $newData = array_merge($this->params, ['dbname' => $newDbName]);
+
+        $this->dynamicConnection->reinitialize($newData);
+
+        $this->assertSame($newDbName, $this->dynamicConnection->getDatabase());
+        $this->assertSame($newData, $this->dynamicConnection->getParams());
+    }
 }
