@@ -37,6 +37,32 @@ class DynamicEntityManagerTest extends TestCase
         $dynamicEntityManager->changeDatabase('testDb');
     }
 
+    public function testDoesNotCallTransactionRollbackWhenTransactionIsNotActive()
+    {
+        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
+        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
+
+        $entityManagerMock = $this->createMock(EntityManager::class);
+        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
+        $entityManagerMock->expects($this->never())->method('rollback')->with();
+
+        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager->changeDatabase('TmpDatabase');
+    }
+
+    public function testCallsTransactionRollbackWhenTransactionIsActive()
+    {
+        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
+        $dynamicConnectionMock->method('isTransactionActive')->willReturn(true);
+
+        $entityManagerMock = $this->createMock(EntityManager::class);
+        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
+        $entityManagerMock->expects($this->once())->method('rollback')->with();
+
+        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager->changeDatabase('TmpDatabase');
+    }
+
     public function testCanReinitializeDatabaseWhenOnlyDatabaseNamePassed()
     {
         $dbName = 'TestDB';
