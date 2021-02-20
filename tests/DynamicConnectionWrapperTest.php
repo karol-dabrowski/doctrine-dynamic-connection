@@ -42,6 +42,5 @@ class DynamicConnectionWrapperTest extends TestCase
     public function testImplementsDynamicConnectionInterface()
     {
         $this->assertInstanceOf(DynamicConnection::class, $this->dynamicConnection);
-        $this->dynamicConnection->reinitialize($this->params);
     }
 }
