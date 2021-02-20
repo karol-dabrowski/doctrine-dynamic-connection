@@ -27,6 +27,22 @@ final class DynamicEntityManager extends EntityManagerDecorator
 
         $this->clear();
 
+        $params = $this->getParams($databaseName, $username, $password, $host, $port);
+        $connection->reinitialize($params);
+    }
+
+    private function isTransactionActive(): bool
+    {
+        return $this->getConnection()->isTransactionActive();
+    }
+
+    private function getParams(
+        string $databaseName,
+        ?string $username = null,
+        ?string $password = null,
+        ?string $host = null,
+        ?int $port = null
+    ): array {
         $params = [];
         $params['dbName'] = $databaseName;
 
@@ -46,11 +62,6 @@ final class DynamicEntityManager extends EntityManagerDecorator
             $params['port'] = $port;
         }
 
-        $connection->reinitialize($params);
-    }
-
-    private function isTransactionActive(): bool
-    {
-        return $this->getConnection()->isTransactionActive();
+        return $params;
     }
 }
