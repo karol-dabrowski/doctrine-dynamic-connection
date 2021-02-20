@@ -36,4 +36,21 @@ class DynamicEntityManagerTest extends TestCase
         $this->expectException(ConnectionTypeException::class);
         $dynamicEntityManager->changeDatabase('testDb');
     }
+
+    public function testCanReinitializeDatabaseWhenOnlyDatabaseNamePassed()
+    {
+        $dbName = 'TestDB';
+        $params = [];
+        $params['dbName'] = $dbName;
+
+        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
+        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
+        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+
+        $entityManagerMock = $this->createMock(EntityManager::class);
+        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
+
+        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager->changeDatabase($dbName);
+    }
 }
