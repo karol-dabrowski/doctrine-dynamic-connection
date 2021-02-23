@@ -14,7 +14,7 @@ final class DynamicEntityManager extends EntityManagerDecorator
         ?string $username = null,
         ?string $password = null,
         ?string $host = null,
-        ?int $port = null
+        ?string $port = null
     ): void {
         $connection = $this->getConnection();
         if (!$connection instanceof DynamicConnection) {
@@ -41,7 +41,7 @@ final class DynamicEntityManager extends EntityManagerDecorator
         ?string $username,
         ?string $password,
         ?string $host,
-        ?int $port
+        ?string $port
     ): array {
         $params = [];
 
