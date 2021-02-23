@@ -78,9 +78,8 @@ class DynamicEntityManagerTest extends TestCase
 
     public function testCanReinitializeDatabaseWhenOnlyDatabaseNamePassed()
     {
-        $dbName = 'TestDB';
         $params = [];
-        $params['dbName'] = $dbName;
+        $params['dbName'] = 'TestDB';
 
         $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
         $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
@@ -90,6 +89,6 @@ class DynamicEntityManagerTest extends TestCase
         $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
 
         $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
-        $dynamicEntityManager->changeDatabase($dbName);
+        $dynamicEntityManager->changeDatabase($params['dbName']);
     }
 }
