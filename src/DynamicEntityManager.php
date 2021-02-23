@@ -51,24 +51,18 @@ final class DynamicEntityManager extends EntityManagerDecorator
     ): array {
         $params = [];
 
-        if ($databaseName) {
-            $params['dbName'] = $databaseName;
-        }
+        $params = $this->addParam($params, 'dbName', $databaseName);
+        $params = $this->addParam($params, 'user', $username);
+        $params = $this->addParam($params, 'password', $password);
+        $params = $this->addParam($params, 'host', $host);
 
-        if ($username) {
-            $params['user'] = $username;
-        }
+        return $this->addParam($params, 'port', $port);
+    }
 
-        if ($password) {
-            $params['password'] = $password;
-        }
-
-        if ($host) {
-            $params['host'] = $host;
-        }
-
-        if ($port) {
-            $params['port'] = $port;
+    private function addParam(array $params, string $paramName, ?string $paramValue): array
+    {
+        if ($paramValue) {
+            $params[$paramName] = $paramValue;
         }
 
         return $params;
