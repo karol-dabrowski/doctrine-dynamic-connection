@@ -10,7 +10,7 @@ use DynamicConnection\Exception\ConnectionTypeException;
 final class DynamicEntityManager extends EntityManagerDecorator
 {
     public function changeDatabase(
-        string $databaseName,
+        ?string $databaseName = null,
         ?string $username = null,
         ?string $password = null,
         ?string $host = null,
@@ -37,14 +37,17 @@ final class DynamicEntityManager extends EntityManagerDecorator
     }
 
     private function getParams(
-        string $databaseName,
-        ?string $username = null,
-        ?string $password = null,
-        ?string $host = null,
-        ?int $port = null
+        ?string $databaseName,
+        ?string $username,
+        ?string $password,
+        ?string $host,
+        ?int $port
     ): array {
         $params = [];
-        $params['dbName'] = $databaseName;
+
+        if ($databaseName) {
+            $params['dbName'] = $databaseName;
+        }
 
         if ($username) {
             $params['user'] = $username;
