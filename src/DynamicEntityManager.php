@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DynamicConnection;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\Decorator\EntityManagerDecorator;
 use DynamicConnection\Exception\ConnectionTypeException;
 
@@ -17,9 +18,7 @@ final class DynamicEntityManager extends EntityManagerDecorator
         ?string $port = null
     ): void {
         $connection = $this->getConnection();
-        if (!$connection instanceof DynamicConnection) {
-            throw new ConnectionTypeException();
-        }
+        $this->validateConnection($connection);
 
         if ($this->isTransactionActive()) {
             $this->rollback();
@@ -29,6 +28,13 @@ final class DynamicEntityManager extends EntityManagerDecorator
 
         $params = $this->getParams($databaseName, $username, $password, $host, $port);
         $connection->reinitialize($params);
+    }
+
+    private function validateConnection(Connection $connection)
+    {
+        if (!$connection instanceof DynamicConnection) {
+            throw new ConnectionTypeException();
+        }
     }
 
     private function isTransactionActive(): bool
