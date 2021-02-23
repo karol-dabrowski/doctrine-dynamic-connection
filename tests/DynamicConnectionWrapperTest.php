@@ -15,7 +15,7 @@ class DynamicConnectionWrapperTest extends TestCase
 {
     private DynamicConnection $dynamicConnection;
 
-    protected array $params = [
+    private array $params = [
         'dbname' => 'test_db',
         'driver' => 'pdo_mysql',
         'host' => 'localhost',
@@ -24,6 +24,16 @@ class DynamicConnectionWrapperTest extends TestCase
         'port' => '3306',
         'wrapperClass' => DynamicConnectionWrapper::class
     ];
+
+    private string $newDbName = 'new_db_name';
+
+    private string $newUsername = 'username123';
+
+    private string $newPassword = 'newPassword';
+
+    private string $newHost = '127.0.0.1';
+
+    private string $newPort = '3307';
 
     protected function setUp(): void
     {
@@ -71,72 +81,59 @@ class DynamicConnectionWrapperTest extends TestCase
 
     public function testDatabaseCanBeChanged()
     {
-        $newDbName = 'new_db_name';
-        $newData = array_merge($this->params, ['dbname' => $newDbName]);
+        $newData = array_merge($this->params, ['dbname' => $this->newDbName]);
 
         $this->dynamicConnection->reinitialize($newData);
 
-        $this->assertSame($newDbName, $this->dynamicConnection->getDatabase());
+        $this->assertSame($this->newDbName, $this->dynamicConnection->getDatabase());
         $this->assertSame($newData, $this->dynamicConnection->getParams());
     }
 
     public function testDatabaseAndUsernameCanBeChanged()
     {
-        $newDbName = 'new_db_name';
-        $newUsername = 'username123';
-        $newData = array_merge($this->params, ['dbname' => $newDbName, 'username' => $newUsername]);
+        $newData = array_merge($this->params, ['dbname' => $this->newDbName, 'username' => $this->newUsername]);
 
         $this->dynamicConnection->reinitialize($newData);
 
-        $this->assertSame($newDbName, $this->dynamicConnection->getDatabase());
+        $this->assertSame($this->newDbName, $this->dynamicConnection->getDatabase());
         $this->assertSame($newData, $this->dynamicConnection->getParams());
     }
 
     public function testDatabaseAndUsernameAndPasswordCanBeChanged()
     {
-        $newDbName = 'new_db_name';
-        $newUsername = 'username123';
-        $newPassword = 'newPassword';
         $newData = array_merge(
             $this->params,
-            ['dbname' => $newDbName, 'username' => $newUsername, 'password' => $newPassword]
+            ['dbname' => $this->newDbName, 'username' => $this->newUsername, 'password' => $this->newPassword]
         );
 
         $this->dynamicConnection->reinitialize($newData);
 
-        $this->assertSame($newDbName, $this->dynamicConnection->getDatabase());
+        $this->assertSame($this->newDbName, $this->dynamicConnection->getDatabase());
         $this->assertSame($newData, $this->dynamicConnection->getParams());
     }
 
     public function testDatabaseAndUsernameAndPasswordAndHostAndPortCanBeChanged()
     {
-        $newDbName = 'new_db_name';
-        $newUsername = 'username123';
-        $newPassword = 'newPassword';
-        $newHost = '127.0.0.1';
-        $newPort = '3307';
         $newData = array_merge(
             $this->params,
             [
-                'dbname' => $newDbName,
-                'username' => $newUsername,
-                'password' => $newPassword,
-                'host' => $newHost,
-                'port' => $newPort
+                'dbname' => $this->newDbName,
+                'username' => $this->newUsername,
+                'password' => $this->newPassword,
+                'host' => $this->newHost,
+                'port' => $this->newPort
             ]
         );
 
         $this->dynamicConnection->reinitialize($newData);
 
-        $this->assertSame($newDbName, $this->dynamicConnection->getDatabase());
+        $this->assertSame($this->newDbName, $this->dynamicConnection->getDatabase());
         $this->assertSame($newData, $this->dynamicConnection->getParams());
     }
 
     public function testUsernameAndPasswordCanBeChanged()
     {
-        $newUsername = 'username123';
-        $newPassword = 'newPassword';
-        $newData = array_merge($this->params, ['username' => $newUsername, 'password' => $newPassword]);
+        $newData = array_merge($this->params, ['username' => $this->newUsername, 'password' => $this->newPassword]);
 
         $this->dynamicConnection->reinitialize($newData);
 
@@ -145,13 +142,14 @@ class DynamicConnectionWrapperTest extends TestCase
 
     public function testUsernameAndPasswordAndHostAndPortCanBeChanged()
     {
-        $newUsername = 'username123';
-        $newPassword = 'newPassword';
-        $newHost = '127.0.0.1';
-        $newPort = '3307';
         $newData = array_merge(
             $this->params,
-            ['username' => $newUsername, 'password' => $newPassword, 'host' => $newHost, 'port' => $newPort]
+            [
+                'username' => $this->newUsername,
+                'password' => $this->newPassword,
+                'host' => $this->newHost,
+                'port' => $this->newPort
+            ]
         );
 
         $this->dynamicConnection->reinitialize($newData);
@@ -161,8 +159,7 @@ class DynamicConnectionWrapperTest extends TestCase
 
     public function testHostCanBeChanged()
     {
-        $newHost = '127.0.0.1';
-        $newData = array_merge($this->params, ['host' => $newHost]);
+        $newData = array_merge($this->params, ['host' => $this->newHost]);
 
         $this->dynamicConnection->reinitialize($newData);
 
@@ -171,9 +168,7 @@ class DynamicConnectionWrapperTest extends TestCase
 
     public function testHostAndPortCanBeChanged()
     {
-        $newHost = '127.0.0.1';
-        $newPort = '3307';
-        $newData = array_merge($this->params, ['host' => $newHost, 'port' => $newPort]);
+        $newData = array_merge($this->params, ['host' => $this->newHost, 'port' => $this->newPort]);
 
         $this->dynamicConnection->reinitialize($newData);
 
@@ -182,8 +177,7 @@ class DynamicConnectionWrapperTest extends TestCase
 
     public function testPortCanBeChanged()
     {
-        $newPort = '3307';
-        $newData = array_merge($this->params, ['port' => $newPort]);
+        $newData = array_merge($this->params, ['port' => $this->newPort]);
 
         $this->dynamicConnection->reinitialize($newData);
 
