@@ -79,7 +79,7 @@ class DynamicEntityManagerTest extends TestCase
     public function testCanReinitializeDatabaseWhenOnlyDatabaseNamePassed()
     {
         $params = [];
-        $params['dbName'] = 'TestDB';
+        $params['dbname'] = 'TestDB';
 
         $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
         $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
@@ -89,7 +89,7 @@ class DynamicEntityManagerTest extends TestCase
         $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
 
         $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
-        $dynamicEntityManager->changeDatabase($params['dbName']);
+        $dynamicEntityManager->changeDatabase($params['dbname']);
     }
 
     public function testCanReinitializeDatabaseWhenOnlyUsernamePassed()
@@ -128,7 +128,7 @@ class DynamicEntityManagerTest extends TestCase
     public function testCanReinitializeDatabaseWhenDatabaseNameAndUsernameAndPasswordPassed()
     {
         $params = [];
-        $params['dbName'] = 'TestDB';
+        $params['dbname'] = 'TestDB';
         $params['user'] = 'test_user';
         $params['password'] = 'new_password_123';
 
@@ -140,7 +140,7 @@ class DynamicEntityManagerTest extends TestCase
         $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
 
         $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
-        $dynamicEntityManager->changeDatabase($params['dbName'], $params['user'], $params['password']);
+        $dynamicEntityManager->changeDatabase($params['dbname'], $params['user'], $params['password']);
     }
 
     public function testCanReinitializeDatabaseWhenOnlyHostPassed()
@@ -178,7 +178,7 @@ class DynamicEntityManagerTest extends TestCase
     public function testCanReinitializeDatabaseWhenDatabaseNameAndHostAndPortPassed()
     {
         $params = [];
-        $params['dbName'] = 'TestDB';
+        $params['dbname'] = 'TestDB';
         $params['host'] = 'localhost2';
         $params['port'] = '3308';
 
@@ -190,13 +190,13 @@ class DynamicEntityManagerTest extends TestCase
         $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
 
         $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
-        $dynamicEntityManager->changeDatabase($params['dbName'], null, null, $params['host'], $params['port']);
+        $dynamicEntityManager->changeDatabase($params['dbname'], null, null, $params['host'], $params['port']);
     }
 
     public function testCanReinitializeDatabaseWhenDatabaseNameAndUsernameAndPasswordAndHostAndPortPassed()
     {
         $params = [];
-        $params['dbName'] = 'TestDB';
+        $params['dbname'] = 'TestDB';
         $params['user'] = 'test_user';
         $params['password'] = 'new_password_123';
         $params['host'] = 'localhost2';
@@ -211,7 +211,7 @@ class DynamicEntityManagerTest extends TestCase
 
         $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
         $dynamicEntityManager->changeDatabase(
-            $params['dbName'],
+            $params['dbname'],
             $params['user'],
             $params['password'],
             $params['host'],
