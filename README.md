@@ -5,6 +5,12 @@
 
   * PHP 7.3 or greater
 
+### Installation
+To install Doctrine Dynamic Connection via Composer execute the following command:
+``` bash
+composer require karol-dabrowski/doctrine-dynamic-connection
+```
+
 ### Documentation
 * [Full documentation](https://karol-dabrowski.github.io/doctrine-dynamic-connection)
 
