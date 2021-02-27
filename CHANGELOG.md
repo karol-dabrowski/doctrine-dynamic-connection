@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2021-02-27
+
 ### Added
 
 - Wrapper class for the default Doctrine connection
@@ -17,4 +19,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changelog
 - License
 
-[Unreleased]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/commits/HEAD
+
+[unreleased]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v0.1.0
