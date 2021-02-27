@@ -1,6 +1,6 @@
 {
   "name": "karol-dabrowski/doctrine-dynamic-connection",
-  "description": "Doctrine Dynamic Connection library allows you to modify database connection parameters on runtime",
+  "description": "Doctrine Dynamic Connection library allows you to modify database connection parameters at runtime",
   "type": "library",
   "license": "MIT",
   "authors": [
