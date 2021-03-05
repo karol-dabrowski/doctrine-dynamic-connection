@@ -53,9 +53,6 @@ $entityManager = EntityManager::create($dbParams, $config);
 $dynamicEntityManager = new DynamicEntityManager($entityManager);
 ```
 
-### Documentation
-* [Full documentation](https://karol-dabrowski.github.io/doctrine-dynamic-connection)
-
 ### Author
 Karol Dabrowski [@kdabrowskidev](https://twitter.com/kdabrowskidev)
 
