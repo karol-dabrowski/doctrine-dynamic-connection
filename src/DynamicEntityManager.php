@@ -10,7 +10,7 @@ use DynamicConnection\Exception\ConnectionTypeException;
 
 final class DynamicEntityManager extends EntityManagerDecorator
 {
-    public function changeDatabase(
+    public function modifyConnection(
         ?string $databaseName = null,
         ?string $username = null,
         ?string $password = null,
