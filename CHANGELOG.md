@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Installation section in README.md
 - Setup section in README.md
 - Tests status shield in README.md
+- Usage section in README.md
 
 ### Changed
 

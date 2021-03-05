@@ -57,6 +57,40 @@ $entityManager = EntityManager::create($dbParams, $config);
 $dynamicEntityManager = new DynamicEntityManager($entityManager);
 ```
 
+### Usage
+The most important method of `DynamicEntityManager` is `modifyConnection()`. It takes five parameters, but none of them is required.
+```php
+public function modifyConnection(
+    ?string $databaseName = null,
+    ?string $username = null,
+    ?string $password = null,
+    ?string $host = null,
+    ?string $port = null
+): void;
+```
+Only parameters with non-null value will be modified. If you call the method with no arguments, your connection parameters will not be changed. Pass `null` when you don't want to change a particular parameter.
+```php
+<?php
+
+// Change database name
+$dynamicEntityManager->modifyConnection('new_db_name');
+
+// Change database name and database user
+$dynamicEntityManager->modifyConnection('new_db_name', 'username', 'password');
+
+// Change database user and leave database name unchanged
+$dynamicEntityManager->modifyConnection(null, 'username', 'password');
+
+// Change only database host and port, leave database name and user unchanged
+$dynamicEntityManager->modifyConnection(null, null, null, '127.0.0.2', '3307');
+
+// Change database name, host and port, leave database user unchanged
+$dynamicEntityManager->modifyConnection('new_db_name', null, null, '127.0.0.2', '3307');
+
+// Change all parameters
+$dynamicEntityManager->modifyConnection('new_db_name', 'username', 'password', '127.0.0.2', '3307');
+```
+
 ### Author
 Karol Dabrowski [@kdabrowskidev](https://twitter.com/kdabrowskidev)
 
