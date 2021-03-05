@@ -1,4 +1,5 @@
 # Doctrine Dynamic Connection
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/karol-dabrowski/doctrine-dynamic-connection/Tests/master?label=Tests)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/actions/workflows/tests.yml?query=branch%3Amaster)
 [![License: MIT](https://img.shields.io/packagist/l/karol-dabrowski/doctrine-dynamic-connection)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/blob/master/LICENSE.md)
 
 ### Requirements
