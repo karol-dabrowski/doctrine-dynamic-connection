@@ -1,5 +1,6 @@
 # Doctrine Dynamic Connection
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/karol-dabrowski/doctrine-dynamic-connection/Tests/master?label=Tests)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/actions/workflows/tests.yml?query=branch%3Amaster)
+[![GitHub Workflow Status - Tests](https://img.shields.io/github/workflow/status/karol-dabrowski/doctrine-dynamic-connection/Tests/master?label=Tests)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/actions/workflows/tests.yml?query=branch%3Amaster)
+[![GitHub Workflow Status - code analysis](https://img.shields.io/github/workflow/status/karol-dabrowski/doctrine-dynamic-connection/Code%20analysis/master?label=Code%20analysis)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/actions/workflows/code_analysis.yml?query=branch%3Amaster)
 [![License: MIT](https://img.shields.io/packagist/l/karol-dabrowski/doctrine-dynamic-connection)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/blob/master/LICENSE.md)
 
 ### Requirements
