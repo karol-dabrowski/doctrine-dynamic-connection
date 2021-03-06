@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-03-06
+
 ### Added
 
 - Installation section in README.md
@@ -35,5 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - License
 
 
-[unreleased]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v0.2.0
 [0.1.0]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v0.1.0
