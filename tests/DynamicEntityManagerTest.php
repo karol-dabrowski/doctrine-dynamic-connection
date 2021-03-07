@@ -13,10 +13,21 @@ use PHPUnit\Framework\TestCase;
 
 class DynamicEntityManagerTest extends TestCase
 {
+    private DynamicConnectionWrapper $dynamicConnectionMock;
+
+    private EntityManager $entityManagerMock;
+
+    protected function setUp(): void
+    {
+        $this->dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
+        $this->dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
+
+        $this->entityManagerMock = $this->createMock(EntityManager::class);
+    }
+
     public function testCanBeCreated()
     {
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
 
         $this->assertInstanceOf(DynamicEntityManager::class, $dynamicEntityManager);
     }
@@ -24,11 +35,8 @@ class DynamicEntityManagerTest extends TestCase
     public function testThrowsExceptionWhenConnectionTypeIsWrong()
     {
         $connectionMock = $this->createMock(Connection::class);
-
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($connectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $this->entityManagerMock->method('getConnection')->willReturn($connectionMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
 
         $this->assertInstanceOf(Connection::class, $dynamicEntityManager->getConnection());
         $this->assertNotInstanceOf(DynamicConnectionWrapper::class, $dynamicEntityManager->getConnection());
@@ -39,14 +47,10 @@ class DynamicEntityManagerTest extends TestCase
 
     public function testDoesNotCallTransactionRollbackWhenTransactionIsNotActive()
     {
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
+        $this->entityManagerMock->expects($this->never())->method('rollback')->with();
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-        $entityManagerMock->expects($this->never())->method('rollback')->with();
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection('TmpDatabase');
     }
 
@@ -55,24 +59,19 @@ class DynamicEntityManagerTest extends TestCase
         $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
         $dynamicConnectionMock->method('isTransactionActive')->willReturn(true);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-        $entityManagerMock->expects($this->once())->method('rollback')->with();
+        $this->entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
+        $this->entityManagerMock->expects($this->once())->method('rollback')->with();
 
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection('TmpDatabase');
     }
 
     public function testClearsObjectManager()
     {
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
+        $this->entityManagerMock->expects($this->once())->method('clear')->with();
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-        $entityManagerMock->expects($this->once())->method('clear')->with();
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection('test_database');
     }
 
@@ -81,14 +80,10 @@ class DynamicEntityManagerTest extends TestCase
         $params = [];
         $params['dbname'] = 'TestDB';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection($params['dbname']);
     }
 
@@ -97,14 +92,10 @@ class DynamicEntityManagerTest extends TestCase
         $params = [];
         $params['user'] = 'test_user';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection(null, $params['user']);
     }
 
@@ -114,14 +105,10 @@ class DynamicEntityManagerTest extends TestCase
         $params['user'] = 'test_user';
         $params['password'] = 'new_password_123';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection(null, $params['user'], $params['password']);
     }
 
@@ -132,14 +119,10 @@ class DynamicEntityManagerTest extends TestCase
         $params['user'] = 'test_user';
         $params['password'] = 'new_password_123';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection($params['dbname'], $params['user'], $params['password']);
     }
 
@@ -148,14 +131,10 @@ class DynamicEntityManagerTest extends TestCase
         $params = [];
         $params['host'] = 'localhost2';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection(null, null, null, $params['host']);
     }
 
@@ -164,14 +143,10 @@ class DynamicEntityManagerTest extends TestCase
         $params = [];
         $params['port'] = '3308';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection(null, null, null, null, $params['port']);
     }
 
@@ -182,14 +157,10 @@ class DynamicEntityManagerTest extends TestCase
         $params['host'] = 'localhost2';
         $params['port'] = '3308';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection($params['dbname'], null, null, $params['host'], $params['port']);
     }
 
@@ -202,14 +173,10 @@ class DynamicEntityManagerTest extends TestCase
         $params['host'] = 'localhost2';
         $params['port'] = '3308';
 
-        $dynamicConnectionMock = $this->createMock(DynamicConnectionWrapper::class);
-        $dynamicConnectionMock->method('isTransactionActive')->willReturn(false);
-        $dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo($params));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
 
-        $entityManagerMock = $this->createMock(EntityManager::class);
-        $entityManagerMock->method('getConnection')->willReturn($dynamicConnectionMock);
-
-        $dynamicEntityManager = new DynamicEntityManager($entityManagerMock);
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
         $dynamicEntityManager->modifyConnection(
             $params['dbname'],
             $params['user'],

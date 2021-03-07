@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README badge for code analysis
 - README badge for the library version
 
+### Changed
+
+- Refactored unit tests of `DynamicEntityManager` class
+
 ## [0.2.0] - 2021-03-06
 
 ### Added
