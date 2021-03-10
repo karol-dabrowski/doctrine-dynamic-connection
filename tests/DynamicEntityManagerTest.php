@@ -75,6 +75,15 @@ class DynamicEntityManagerTest extends TestCase
         $dynamicEntityManager->modifyConnection('test_database');
     }
 
+    public function testCanReinitializeWithSameParametersWhenNoParametersPassed()
+    {
+        $this->dynamicConnectionMock->expects($this->once())->method('reinitialize')->with($this->equalTo([]));
+        $this->entityManagerMock->method('getConnection')->willReturn($this->dynamicConnectionMock);
+
+        $dynamicEntityManager = new DynamicEntityManager($this->entityManagerMock);
+        $dynamicEntityManager->modifyConnection();
+    }
+
     public function testCanReinitializeDatabaseWhenOnlyDatabaseNamePassed()
     {
         $params = [];
