@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Unit test checking database reinitialization when no parameters passed
+- Library description in README
 
 ## [0.2.1] - 2021-03-07
 

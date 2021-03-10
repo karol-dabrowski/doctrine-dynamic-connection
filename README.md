@@ -4,6 +4,8 @@
 [![GitHub Workflow Status - code analysis](https://img.shields.io/github/workflow/status/karol-dabrowski/doctrine-dynamic-connection/Code%20analysis/master?label=Code%20analysis)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/actions/workflows/code_analysis.yml?query=branch%3Amaster)
 [![License: MIT](https://img.shields.io/packagist/l/karol-dabrowski/doctrine-dynamic-connection?label=License)](https://github.com/karol-dabrowski/doctrine-dynamic-connection/blob/master/LICENSE.md)
 
+Doctrine Dynamic Connection is a library that allows you to dynamically reinitialize a database connection with different parameters. The library creates wrappers for `Connection` and `EntityManager` classes and extend their functionality.
+
 ### Requirements
 
 * PHP 7.3 or greater
