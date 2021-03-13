@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unit test checking database reinitialization when no parameters passed
 - Library description in README
 - PHPStan configuration
+- PHPStan job configuration in GitHub Actions CI
 
 ### Changed
 

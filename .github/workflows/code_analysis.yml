@@ -24,3 +24,25 @@ jobs:
     
     - name: Run CS Fixer
       run: vendor/bin/php-cs-fixer fix -v --using-cache=no --dry-run --ansi
+
+  phpstan:
+    name: PHPStan
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --dev --no-progress --no-interaction --ansi
+
+      - name: Run PHPStan analysis
+        run: vendor/bin/phpstan analyse --no-progress
