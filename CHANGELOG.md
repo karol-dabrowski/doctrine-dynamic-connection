@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2021-03-16
+
 ### Added
 
 - Unit test checking database reinitialization when no parameters passed
@@ -59,7 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - License
 
 
-[unreleased]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/compare/v0.2.1...HEAD
+[unreleased]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v1.0.0
 [0.2.1]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v0.2.1
 [0.2.0]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v0.2.0
 [0.1.0]: https://github.com/karol-dabrowski/doctrine-dynamic-connection/releases/tag/v0.1.0
